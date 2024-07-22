@@ -143,12 +143,12 @@ int main()
 // PROGRAM-1 (SHORTEST PATH)
 // ALGO. OF BREADTH FOR SEARCH GRAPH USING "DIJKASTRA ALGOITHUM"
 const int N = 10e5 + 7;
-vector<pair<int, int>> g[N];
+vector<pair<int, int>> G[N];
 vector<int> distTo(N, 10000000);
 void bfs(int source)
 {
     // KOWW HOW TO MAKE THE PRIORITY QUEUE...........................
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     distTo[source] = 0;
     pq.push(make_pair(0, source));
     while (!pq.empty())
@@ -157,7 +157,7 @@ void bfs(int source)
         int prev = pq.top().second;
         pq.pop();
         vector<pair<int, int>>::iterator it;
-        for (auto it = g[prev].begin(); it != g[prev].end(); it++)
+        for (auto it = G[prev].begin(); it != G[prev].end(); it++)
         {
             int next = it->first;
             int nextDist = it->second;
@@ -179,8 +179,8 @@ int main()
     {
         int x, y, wt;
         cin >> x >> y >> wt;
-        g[x].push_back({y, wt});
-        g[y].push_back({x, wt});
+        G[x].push_back({y, wt});
+        G[y].push_back({x, wt});
     }
     int k;
     cin >> k;
@@ -367,7 +367,7 @@ void revDfs(int node, vector<int> &vis, vector<int> transpose[])
 int main()
 {
     int n = 6, m = 7;
-    vector<int> adj[n + 1];
+    vector<int> adj[6 + 1];
     adj[1].push_back(3);
     adj[2].push_back(1);
     adj[3].push_back(2);
@@ -384,7 +384,7 @@ int main()
             dfs(i, st, vis, adj);
         }
     }
-    vector<int> transpose[n + 1];
+    vector<int> transpose[6 + 1];
     for (int i = 1; i <= n; i++)
     {
         vis[i] = 0;
@@ -409,6 +409,7 @@ int main()
 
 // PROBLEM -5
 //  TARGEN ALGO
+vector<vector<int>> adj;
 void DFS(int u, vector<int> &disc, vector<int> &low, stack<int> &mystack, vector<bool> &presentInStack)
 {
     static int time = 0;
@@ -433,7 +434,7 @@ void DFS(int u, vector<int> &disc, vector<int> &low, stack<int> &mystack, vector
         cout << "SCC is: ";
         while (mystack.top() != u)
             cout << mystack.top() << " ";
-        present InStack[mystack.top()] = false;
+        presentInStack[mystack.top()] = false;
         mystack.pop();
     }
     cout << mystack.top() << "\n";
@@ -443,6 +444,7 @@ void DFS(int u, vector<int> &disc, vector<int> &low, stack<int> &mystack, vector
 
 void findSCCs_Tarjan()
 {
+    int V;
     vector<int> disc(V, -1), low(V, -1);
     vector<bool> presentInStack(V, false); // Avoids cross-edge
     stack<int> mystack;
@@ -450,17 +452,18 @@ void findSCCs_Tarjan()
         if (disc[i] == -1)
             DFS(i, disc, low, mystack, presentInStack);
 }
+
 int main()
 {
-    adj[0].pb(1);
-    adj[1].pb(2);
-    adj[1].pb(3);
-    adj[3].pb(4);
-    adj[4].pb(0);
-    adj[4].pb(5);
-    adj[4].pb(6);
-    adj[5].pb(6);
-    adj[6].pb(5);
+    adj[0].push_back(1);
+    adj[1].push_back(2);
+    adj[1].push_back(3);
+    adj[3].push_back(4);
+    adj[4].push_back(0);
+    adj[4].push_back(5);
+    adj[4].push_back(6);
+    adj[5].push_back(6);
+    adj[6].push_back(5);
     findSCCs_Tarjan();
     return 0;
 }
